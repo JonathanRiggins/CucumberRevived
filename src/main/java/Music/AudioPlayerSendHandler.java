@@ -26,6 +26,16 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
     this.frame = new MutableAudioFrame();
     this.frame.setBuffer(buffer);
   }
+  
+  public AudioPlayer getPlayer() {
+	  return audioPlayer;
+  }
+  
+  public void stopAndClear()
+  {
+      audioPlayer.stopTrack();
+      //current = null;
+  }
 
   @Override
   public boolean canProvide() {
