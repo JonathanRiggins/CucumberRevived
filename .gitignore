@@ -1,6 +1,7 @@
 .gradle
 /build/
 src/main/java/jda/Secret.java
+bin/jda/Secret.class
 
 # Ignore Gradle GUI config
 gradle-app.setting
