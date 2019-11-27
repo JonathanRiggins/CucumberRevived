@@ -21,7 +21,11 @@ public class Listener implements EventListener {
 			Message messege = ((MessageReceivedEvent) event).getMessage();
 			
 			// Command Handlers
-			if (messege.getContentRaw().toLowerCase().contains("i'm")) {
+			if (messege.getContentRaw().toLowerCase().contains("i'm ")) {
+				main.getMyNameIsCommand().execute((MessageReceivedEvent) event);
+			}else if (messege.getContentRaw().toLowerCase().contains("im ")) {
+				main.getMyNameIsCommand().execute((MessageReceivedEvent) event);
+			}else if (messege.getContentRaw().toLowerCase().contains("i am ")) {
 				main.getMyNameIsCommand().execute((MessageReceivedEvent) event);
 			}
 		}

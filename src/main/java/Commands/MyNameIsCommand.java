@@ -29,7 +29,7 @@ public class MyNameIsCommand {
 			if (message.isWebhookMessage()) {
 
 				author.getName();
-			} else {
+			} else if (message.getContentRaw().toLowerCase().contains("i'm")) {
 				
 				// If Bot don't do anything
 				if (author.isBot()) {
@@ -41,7 +41,33 @@ public class MyNameIsCommand {
 				String s = dadName.substring(dadName.lastIndexOf("i'm")).replaceFirst("i'm", "");
 
 				// Send super witty reply
-				event.getChannel().sendMessage("Hi," + s + " i'm " + jda.getSelfUser().getName()).queue();
+				event.getChannel().sendMessage("Hi," + s + ", i'm Cucumber").queue();
+			} else if (message.getContentRaw().toLowerCase().contains("im")) {
+				
+				// If Bot don't do anything
+				if (author.isBot()) {
+					return;
+				}
+
+				// Pull "Dad Name" from message
+				String dadName = event.getMessage().getContentRaw().toLowerCase();
+				String s = dadName.substring(dadName.lastIndexOf("im")).replaceFirst("im", "");
+
+				// Send super witty reply
+				event.getChannel().sendMessage("Hi," + s + ", i'm Cucumber").queue();
+			} else if (message.getContentRaw().toLowerCase().contains("i am")) {
+				
+				// If Bot don't do anything
+				if (author.isBot()) {
+					return;
+				}
+
+				// Pull "Dad Name" from message
+				String dadName = event.getMessage().getContentRaw().toLowerCase();
+				String s = dadName.substring(dadName.lastIndexOf("i am")).replaceFirst("i am", "");
+
+				// Send super witty reply
+				event.getChannel().sendMessage("Hi," + s + ", i am Cucumber").queue();
 			}
 		} else if (event.isFromType(ChannelType.PRIVATE)) {
 			
