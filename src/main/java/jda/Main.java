@@ -13,8 +13,11 @@ import org.slf4j.LoggerFactory;
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
+import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 
 import Commands.ClearCommand;
+import Commands.CucumberCommand;
+import Commands.CucumberFactsCommand;
 import Commands.HangManCommand;
 import Commands.MyNameIsCommand;
 import Commands.PingCommand;
@@ -47,6 +50,8 @@ public class Main {
 	private final Random random = new Random();
 
 	private final MyNameIsCommand myNameIsCommand;
+	
+	private final CucumberCommand cucumberCommand;
 
 	private boolean shuttingDown = false;
 	private JDA jda;
@@ -56,6 +61,7 @@ public class Main {
 	public Main(String[] args) throws IOException, LoginException, IllegalArgumentException, RateLimitedException {
 
 		myNameIsCommand = new MyNameIsCommand(this);
+		cucumberCommand = new CucumberCommand(this);
 
 		// Defines an event waiter
 		EventWaiter waiter = new EventWaiter();
@@ -88,11 +94,21 @@ public class Main {
 		builder.addCommands(
 
 				// General Commands
-				new PingCommand(), new ClearCommand(), new HangManCommand(waiter),
+				new PingCommand(), 
+				new ClearCommand(), 
+				new HangManCommand(waiter),
+				new CucumberFactsCommand(waiter),
 
 				// Music Commands
-				new JoinCommand(), new LeaveCommand(), new PlayCommand(), new StopCommand(), new QueueCommand(),
-				new SkipCommand(), new NowPlayingCommand(), new PauseCommand(), new ResumeCommand(),
+				new JoinCommand(),
+				new LeaveCommand(),
+				new PlayCommand(), 
+				new StopCommand(), 
+				new QueueCommand(),
+				new SkipCommand(), 
+				new NowPlayingCommand(), 
+				new PauseCommand(), 
+				new ResumeCommand(),
 				new VolumeCommand());
 
 		// Defines the builder as client
@@ -118,9 +134,12 @@ public class Main {
 
 				// Set status and game playing
 				.setStatus(OnlineStatus.IDLE).setActivity(Activity.playing("Loading..."))
+				
+				// Sets JDA-NAS
+				.setAudioSendFactory(new NativeAudioSendFactory())
 
 				// Add the listeners
-				.addEventListeners(waiter, client, new Listener(this))
+				.addEventListeners(waiter, client, new Listener(this, waiter))
 
 				// Start
 				.build();
@@ -137,6 +156,10 @@ public class Main {
 	// Getters
 	public MyNameIsCommand getMyNameIsCommand() {
 		return myNameIsCommand;
+	}
+	
+	public CucumberCommand getCucumberCommand() {
+		return cucumberCommand;
 	}
 
 	public void shutdown() {
